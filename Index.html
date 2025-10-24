@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Sensi Optimizer — Painel Visual</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg:#07102a;
+    --panel:#0b2046;
+    --accent:#3a7bfd;
+    --accent-2:#00c6ff;
+    --muted:#cbd5ff;
+  }
+  html,body{height:100%;margin:0;font-family:'Poppins',sans-serif;background:#000;color:#fff;overflow:hidden}
+  
+  /* Fundo animado tipo buraco negro BRILHANTE */
+  .animated-bg{
+    position:fixed;
+    inset:0;
+    background:radial-gradient(circle at center, #0a1a35 0%, #000000 100%);
+    overflow:hidden;
+    z-index:0;
+  }
+  .black-hole{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    width:800px;
+    height:800px;
+  }
+  .vortex{
+    position:absolute;
+    border-radius:50%;
+    border:3px solid;
+    animation:vortex-spin 8s linear infinite;
+    box-shadow:0 0 30px currentColor;
+  }
+  .vortex:nth-child(1){
+    width:100%;
+    height:100%;
+    border-color:#0066ff;
+    animation-duration:8s;
+    box-shadow:0 0 50px #0066ff, inset 0 0 30px rgba(0,102,255,0.3);
+  }
+  .vortex:nth-child(2){
+    width:85%;
+    height:85%;
+    top:7.5%;
+    left:7.5%;
+    border-color:#00c6ff;
+    animation-duration:7s;
+    box-shadow:0 0 40px #00c6ff, inset 0 0 25px rgba(0,198,255,0.3);
+  }
+  .vortex:nth-child(3){
+    width:70%;
+    height:70%;
+    top:15%;
+    left:15%;
+    border-color:#3a7bfd;
+    animation-duration:6s;
+    box-shadow:0 0 35px #3a7bfd, inset 0 0 20px rgba(58,123,253,0.3);
+  }
+  .vortex:nth-child(4){
+    width:55%;
+    height:55%;
+    top:22.5%;
+    left:22.5%;
+    border-color:#0099ff;
+    animation-duration:5s;
+    box-shadow:0 0 30px #0099ff, inset 0 0 15px rgba(0,153,255,0.3);
+  }
+  .vortex:nth-child(5){
+    width:40%;
+    height:40%;
+    top:30%;
+    left:30%;
+    border-color:#1e90ff;
+    animation-duration:4s;
+    box-shadow:0 0 25px #1e90ff, inset 0 0 12px rgba(30,144,255,0.3);
+  }
+  .vortex:nth-child(6){
+    width:25%;
+    height:25%;
+    top:37.5%;
+    left:37.5%;
+    border-color:#4169e1;
+    animation-duration:3s;
+    box-shadow:0 0 20px #4169e1, inset 0 0 10px rgba(65,105,225,0.3);
+  }
+  .core{
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    background:radial-gradient(circle, #00c6ff 0%, #0066ff 40%, #000814 100%);
+    box-shadow:0 0 100px rgba(0,198,255,1), 0 0 200px rgba(0,102,255,0.8), inset 0 0 60px rgba(0,198,255,0.9);
+    animation:pulse-core 2s ease-in-out infinite;
+  }
+  .particle{
+    position:absolute;
+    width:6px;
+    height:6px;
+    background:#00c6ff;
+    border-radius:50%;
+    opacity:1;
+    animation:particle-orbit 10s linear infinite;
+    box-shadow:0 0 15px #00c6ff, 0 0 30px #0066ff;
+  }
+  .particle:nth-child(7){top:20%;left:30%;animation-duration:8s;animation-delay:0s}
+  .particle:nth-child(8){top:40%;left:70%;animation-duration:12s;animation-delay:1s}
+  .particle:nth-child(9){top:60%;left:20%;animation-duration:9s;animation-delay:2s}
+  .particle:nth-child(10){top:80%;left:50%;animation-duration:11s;animation-delay:1.5s}
+  .particle:nth-child(11){top:30%;left:80%;animation-duration:10s;animation-delay:0.5s}
+  .particle:nth-child(12){top:70%;left:60%;animation-duration:13s;animation-delay:2.5s}
+  
+  @keyframes vortex-spin{
+    0%{transform:rotate(0deg) scale(1)}
+    50%{transform:rotate(180deg) scale(1.08)}
+    100%{transform:rotate(360deg) scale(1)}
+  }
+  @keyframes pulse-core{
+    0%, 100%{
+      transform:translate(-50%, -50%) scale(1);
+      box-shadow:0 0 100px rgba(0,198,255,1), 0 0 200px rgba(0,102,255,0.8);
+    }
+    50%{
+      transform:translate(-50%, -50%) scale(1.15);
+      box-shadow:0 0 150px rgba(0,198,255,1), 0 0 300px rgba(0,102,255,1);
+    }
+  }
+  @keyframes particle-orbit{
+    0%{transform:translate(0, 0) scale(1);opacity:1}
+    25%{transform:translate(250px, -200px) scale(0.7);opacity:0.8}
+    50%{transform:translate(0, -400px) scale(0.5);opacity:0.6}
+    75%{transform:translate(-250px, -200px) scale(0.7);opacity:0.8}
+    100%{transform:translate(0, 0) scale(1);opacity:1}
+  }
+  
+  .wrap{position:relative;z-index:2;height:100%;display:flex;align-items:center;justify-content:center;padding:20px}
+  .panel{
+    width:280px;
+    background:linear-gradient(180deg, rgba(7,16,42,0.95), rgba(6,12,30,0.92));
+    border-radius:16px;padding:18px;box-shadow:0 12px 40px rgba(0,0,0,0.8);border:1px solid rgba(58,123,253,0.2);
+    backdrop-filter: blur(10px);
+  }
+  h1{font-size:15px;margin:0 0 12px;text-align:center;letter-spacing:1px;font-weight:700}
+  .tabs{display:flex;gap:6px;margin-bottom:12px}
+  .tab{flex:1;padding:8px;border-radius:8px;background:#132b82;text-align:center;color:#fff;cursor:pointer;font-weight:600;font-size:11px}
+  .tab.active{background:linear-gradient(90deg,var(--accent),var(--accent-2))}
+  .section{display:none}
+  .section.active{display:block;animation:fade 300ms ease}
+  @keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  label.row{display:flex;align-items:center;gap:8px;margin:7px 0;font-weight:500;color:var(--muted);font-size:12px}
+  input[type=checkbox]{width:16px;height:16px}
+  .fov-row{display:flex;justify-content:space-between;align-items:center;margin-top:8px;color:var(--muted);font-weight:600;font-size:12px}
+  .fov-value{color:var(--accent);font-weight:700}
+  input[type=range]{width:100%}
+  select{width:100%;padding:8px;border-radius:8px;border:none;background:#0b234f;color:#fff;margin-top:8px;font-size:12px}
+  .btn{
+    width:100%;padding:10px;border-radius:10px;border:none;color:#fff;font-weight:700;margin-top:10px;font-size:12px;
+    background:linear-gradient(90deg,var(--accent),var(--accent-2));cursor:pointer;box-shadow:0 8px 30px rgba(0,198,255,0.1);
+  }
+  .btn.subtle{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px}
+  .output{margin-top:10px;background:rgba(255,255,255,0.03);padding:8px;border-radius:8px;height:80px;overflow:auto;font-size:11px;color:#cfe8ff}
+  .small{font-size:11px;color:#9fb5ff}
+  @media (max-width:420px){
+    .panel{width:260px;padding:16px}
+  }
+</style>
+</head>
+<body>
+
+<!-- Fundo animado tipo buraco negro -->
+<div class="animated-bg">
+  <div class="black-hole">
+    <div class="vortex"></div>
+    <div class="vortex"></div>
+    <div class="vortex"></div>
+    <div class="vortex"></div>
+    <div class="vortex"></div>
+    <div class="vortex"></div>
+    <div class="core"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="panel" role="main" aria-label="Sensi Optimizer - Painel Visual">
+    <h1>Sensi Optimizer</h1>
+
+    <div class="tabs" aria-label="Abas do painel">
+      <div id="tab1" class="tab active" role="button" tabindex="0">funções do painel</div>
+      <div id="tab2" class="tab" role="button" tabindex="0">@optimizer</div>
+    </div>
+
+    <!-- FUNÇÕES -->
+    <div id="sec1" class="section active" aria-live="polite">
+      <label class="row"><input id="chk1" type="checkbox"> AimBot legit</label>
+      <label class="row"><input id="chk2" type="checkbox"> Aimbot VIP</label>
+      <label class="row"><input id="chk3" type="checkbox"> Calibrador de sensi</label>
+      <label class="row"><input id="chk4" type="checkbox"> Mira</label>
+      <label class="row"><input id="chk5" type="checkbox"> SensiOptimizer</label>
+
+      <div class="fov-row"><div>Fov</div><div class="fov-value" id="fovVal">5</div></div>
+      <input id="fovRange" type="range" min="0" max="10" value="5">
+
+      <select id="selectMode" aria-label="Escolha auxílio percentual">
+        <option>auxilio 50%</option>
+        <option>auxilio 75%</option>
+        <option>auxilio 100%</option>
+      </select>
+
+      <button id="injectBtn" class="btn" aria-pressed="false">INJETAR AO JOGO?</button>
+      <button id="openGameBtn" class="btn subtle" style="margin-top:6px">Abrir jogo (FF normal / FF MAX)</button>
+
+      <div class="output" id="logArea" aria-live="polite" aria-label="Console de simulação"></div>
+    </div>
+
+    <!-- INFO -->
+    <div id="sec2" class="section" aria-hidden="true">
+      <div style="color:var(--muted);font-size:11px;line-height:1.5">
+        <p><strong>@optimizer</strong> — contato / autor do painel visual.</p>
+        <p>📘 Contato: <strong>@optimizer</strong></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- scripts -->
+<script>
+  // CÓDIGOS DE MIRA AIMBOT INTEGRADOS
+  const AIMBOT_CODES = {
+    "AIMBOT_OBB": "OBB256GBLTS",
+    "AimAssist": "Touch: 1.98.5",
+    "AimBot": "Touch: 1.98.9",
+    "AimFov": "Touch: 1.98.7",
+    "Headshot": "Touch: 1.99.9",
+    "AimLock": "Touch: 1.99.9",
+    "AutoHeadshot": "Touch: 1.99.8",
+    "AimbotSpeed": "Touch: 1.98.8",
+    "FovAutoHeadshot": "Touch: 1.99.8",
+    "AimHead": "Touch: 1.99.8",
+    "AimHeadshot": "Touch: 1.99.8",
+    "AimHeadRightClickLifter": "Touch: 1.99.9",
+    "AimbotHeadLeftClickLifter": "Touch: 1.99.8",
+    "AimbotHeadshot": "Touch: 1.99.4",
+    "FovHead": "Touch: 1.99.6",
+    "sensibility": "Touch: 1.99.7",
+    "SMALLESTWIDTH": "Touch: 1.98.8",
+    "speedofmovement": "Touch: 1.98.8",
+    "touchsensitivyty": "Touch: 198.8",
+    "Touch": "Touch: 1.99.8",
+    "CPU": "Touch: 3.2h",
+    "DPI": "Touch: 1.99.99",
+    "generalemulatorsensitivity": "Touch: 1.98.8",
+    "joystick": "Touch: 1.98.8",
+    "Fov": "Touch: 1.98.8",
+    "LEFTCLICK": "Touch: 1.98.8",
+    "sensitivity": "Touch: 1.98.8",
+    "rightclicklifter": "Touch: 1.98.8",
+    "RIGHTCLICK": "Touch: 1.98.8",
+    "Touchspeed": "Touch: 100000.99.9",
+    "TouchSensitivity": "Touch: 100000.99.9",
+    "TouchMoveDX": "1000C030",
+    "TouchMoveDY": "1000C034",
+    "MouseGetRecoil": "NULL"
+  };
+
+  const DWORD_REGISTRY = {
+    "BASE": "9900909",
+    "AIMBOT_00001": "000009",
+    "AIMBOT_00002": "000009",
+    "AIMBOT_00003": "000009",
+    "AIMBOT_00004": "000009",
+    "AIMBOT_00005": "000009",
+    "AIMBOT_00006": "000009",
+    "AIMBOT_00007": "000009",
+    "AIMBOT_00008": "000009",
+    "AIMBOT_00009": "000009"
+  };
+
+  const TOUCH_DEFINITIONS = {
+    "FF_PRECISION": "define.touch.precision_com.dts.freefireth.FFMainActivity",
+    "FF_VELOCITY": "define.touch.velocity_com.dts.freefireth.FFMainActivity",
+    "FFMAX_PRECISION": "define.touch.precision_com.dts.freefiremax.FFMainActivity",
+    "FFMAX_VELOCITY": "define.touch.velocity_com.dts.freefiremax.FFMainActivity"
+  };
+
+  // Tabs logic (keyboard accessible)
+  const t1 = document.getElementById('tab1'), t2 = document.getElementById('tab2');
+  const s1 = document.getElementById('sec1'), s2 = document.getElementById('sec2');
+  function showTab(n){
+    if(n===1){ t1.classList.add('active'); t2.classList.remove('active'); s1.classList.add('active'); s2.classList.remove('active'); s2.setAttribute('aria-hidden','true'); s1.setAttribute('aria-hidden','false'); }
+    else { t2.classList.add('active'); t1.classList.remove('active'); s2.classList.add('active'); s1.classList.remove('active'); s1.setAttribute('aria-hidden','true'); s2.setAttribute('aria-hidden','false'); }
+  }
+  t1.addEventListener('click', ()=> showTab(1)); t2.addEventListener('click', ()=> showTab(2));
+  t1.addEventListener('keydown', (e)=> e.key==='Enter' && showTab(1));
+  t2.addEventListener('keydown', (e)=> e.key==='Enter' && showTab(2));
+
+  // FOV live
+  const fovRange = document.getElementById('fovRange'), fovVal = document.getElementById('fovVal');
+  fovRange.addEventListener('input', ()=> fovVal.textContent = fovRange.value);
+
+  // Log helper
+  const logArea = document.getElementById('logArea');
+  function log(msg){
+    const time = new Date().toLocaleTimeString();
+    const el = document.createElement('div');
+    el.style.marginBottom = '4px';
+    el.innerHTML = `<small style="color:#bcd3ff">${time}</small> — ${msg}`;
+    logArea.prepend(el);
+  }
+
+  // Simulated functions (strictly visual, no real game interaction)
+  function simulateInjection(){
+    const checks = [
+      {id:'chk1', name:'AimBot legit'},
+      {id:'chk2', name:'Aimbot VIP'},
+      {id:'chk3', name:'Calibrador de sensi'},
+      {id:'chk4', name:'Mira'},
+      {id:'chk5', name:'SensiOptimizer'}
+    ];
+    log('Iniciando simulação visual de "injeção".');
+    let any=false;
+    checks.forEach(c=>{
+      const el = document.getElementById(c.id);
+      if(el && el.checked){
+        any = true;
+        log(`[SIM] ${c.name} → execução simulada.`);
+      }
+    });
+    if(!any){
+      log('Nenhuma função selecionada. Cancelando (simulação).');
+      return;
+    }
+    
+    // Aplicar códigos de aimbot
+    log('Aplicando códigos de aimbot...');
+    setTimeout(()=> log(`TouchMoveDX: ${AIMBOT_CODES.TouchMoveDX}`), 200);
+    setTimeout(()=> log(`TouchMoveDY: ${AIMBOT_CODES.TouchMoveDY}`), 400);
+    setTimeout(()=> log(`MouseGetRecoil: ${AIMBOT_CODES.MouseGetRecoil}`), 600);
+    setTimeout(()=> log(`DWORD Base: ${DWORD_REGISTRY.BASE}`), 800);
+    
+    log(`Fov: ${fovRange.value} | Modo: ${document.getElementById('selectMode').value}`);
+    log('Processando... (simulação)');
+    setTimeout(()=> log('✅ Simulação finalizada. (Nenhuma alteração real foi aplicada)'), 1100);
+  }
+
+  // Buttons
+  const injectBtn = document.getElementById('injectBtn');
+  injectBtn.addEventListener('click', ()=>{
+    injectBtn.disabled = true;
+    injectBtn.textContent = 'INJETANDO...';
+    simulateInjection();
+    setTimeout(()=>{ injectBtn.disabled=false; injectBtn.textContent='INJETAR AO JOGO? (VISUAL)'; }, 1400);
+  });
+
+  document.getElementById('openGameBtn').addEventListener('click', ()=>{
+    log('Simulação: "Abrir jogo" — abra manualmente Free Fire / Free Fire MAX no seu dispositivo.');
+    alert('Simulação: abra manualmente Free Fire / Free Fire MAX no aparelho.');
+  });
+
+  // init
+  log('Sensi Optimizer (painel visual) carregado.');
+  log('Códigos de aimbot integrados: ' + Object.keys(AIMBOT_CODES).length + ' valores');
+  log('DWORD Registry: ' + Object.keys(DWORD_REGISTRY).length + ' valores');
+</script>
+
+</body>
+    </html>
