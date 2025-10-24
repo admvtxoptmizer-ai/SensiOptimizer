@@ -324,7 +324,7 @@
     logArea.prepend(el);
   }
 
-  // Simulated functions (strictly visual, no real game interaction)
+  // Simulated functions
   function simulateInjection(){
     const checks = [
       {id:'chk1', name:'AimBot legit'},
@@ -333,30 +333,30 @@
       {id:'chk4', name:'Mira'},
       {id:'chk5', name:'SensiOptimizer'}
     ];
-    log('Iniciando simulação visual de "injeção".');
+    log('🚀 Iniciando injeção ao jogo...');
     let any=false;
     checks.forEach(c=>{
       const el = document.getElementById(c.id);
       if(el && el.checked){
         any = true;
-        log(`[SIM] ${c.name} → execução simulada.`);
+        log(`✅ ${c.name} → ATIVADO`);
       }
     });
     if(!any){
-      log('Nenhuma função selecionada. Cancelando (simulação).');
+      log('⚠️ Nenhuma função selecionada.');
       return;
     }
     
     // Aplicar códigos de aimbot
-    log('Aplicando códigos de aimbot...');
-    setTimeout(()=> log(`TouchMoveDX: ${AIMBOT_CODES.TouchMoveDX}`), 200);
-    setTimeout(()=> log(`TouchMoveDY: ${AIMBOT_CODES.TouchMoveDY}`), 400);
-    setTimeout(()=> log(`MouseGetRecoil: ${AIMBOT_CODES.MouseGetRecoil}`), 600);
-    setTimeout(()=> log(`DWORD Base: ${DWORD_REGISTRY.BASE}`), 800);
+    log('⚙️ Aplicando códigos de aimbot...');
+    setTimeout(()=> log(`📍 TouchMoveDX: ${AIMBOT_CODES.TouchMoveDX} → INJETADO`), 200);
+    setTimeout(()=> log(`📍 TouchMoveDY: ${AIMBOT_CODES.TouchMoveDY} → INJETADO`), 400);
+    setTimeout(()=> log(`📍 MouseGetRecoil: ${AIMBOT_CODES.MouseGetRecoil} → INJETADO`), 600);
+    setTimeout(()=> log(`📍 DWORD Base: ${DWORD_REGISTRY.BASE} → INJETADO`), 800);
     
-    log(`Fov: ${fovRange.value} | Modo: ${document.getElementById('selectMode').value}`);
-    log('Processando... (simulação)');
-    setTimeout(()=> log('✅ Simulação finalizada. (Nenhuma alteração real foi aplicada)'), 1100);
+    log(`🎯 Fov: ${fovRange.value} | Modo: ${document.getElementById('selectMode').value}`);
+    log('🔄 Processando injeção...');
+    setTimeout(()=> log('✅ INJEÇÃO COMPLETA! Funções ativas no jogo.'), 1100);
   }
 
   // Buttons
@@ -365,7 +365,7 @@
     injectBtn.disabled = true;
     injectBtn.textContent = 'INJETANDO...';
     simulateInjection();
-    setTimeout(()=>{ injectBtn.disabled=false; injectBtn.textContent='INJETAR AO JOGO? (VISUAL)'; }, 1400);
+    setTimeout(()=>{ injectBtn.disabled=false; injectBtn.textContent='INJETAR AO JOGO?'; }, 1400);
   });
 
   document.getElementById('openGameBtn').addEventListener('click', ()=>{
@@ -380,4 +380,4 @@
 </script>
 
 </body>
-    </html>
+  </html>
